@@ -14,6 +14,19 @@ const authSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    college: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College",
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
     timestamps: true,
@@ -23,7 +36,6 @@ const authSchema = new mongoose.Schema(
 authSchema.pre("save", async function () {
   try {
     const salt = await bcrypt.genSalt(10);
-    console.log(this.password);
     const hashedPassword = await bcrypt.hash(this.password, salt);
     this.password = hashedPassword;
   } catch (err) {

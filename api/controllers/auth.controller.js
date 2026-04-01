@@ -2,7 +2,7 @@ import { Auth } from "../model/auth.schema.js";
 import { genToken } from "../../utils/genToken.js";
 export const signup = async (req, res, next) => {
   try {
-    const { userName, email, password } = req.body;
+    const { userName, email, password, college, isVerified, role } = req.body;
     if (!userName || !email || !password) {
       return res.status(400).json({
         message: "All fields are required",
@@ -18,6 +18,9 @@ export const signup = async (req, res, next) => {
       userName,
       email,
       password,
+      college,
+      isVerified,
+      role,
     });
 
     return res.status(201).json({
@@ -53,7 +56,7 @@ export const signin = async (req, res, next) => {
       });
     }
 
-    const token = await genToken(user._id);
+    const token = await genToken(user._id, user.role);
 
     if (!token) {
       return res.status(400).json({
