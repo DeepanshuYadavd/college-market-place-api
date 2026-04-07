@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRouter from "./api/routes/auth.routes.js";
 import collegeRouter from "./api/routes/college.routes.js";
+import productRouter from "./api/routes/product.route.js";
 import cookieParser from "cookie-parser";
 
 //  config:
@@ -17,9 +18,8 @@ app.use(cookieParser());
 //  routes:
 app.use("/api/auth", authRouter);
 app.use("/api/college", collegeRouter);
+app.use("/api/products", productRouter);
 
-//  api :
 
-//  http://localhost:5000/api/college/admin
 
 export default app;

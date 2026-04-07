@@ -8,6 +8,25 @@ export const createCollge = async (req, res, next) => {
         message: "All fields are required",
       });
     }
+
+    // case : 1 only one admin create one college
+    const isAdminExist = await College.findOne({ admin: req.user.id });
+
+    if (isAdminExist) {
+      return res.status(400).json({
+        message: "Admin can create only one college",
+      });
+    }
+
+    //  case 2 : two admin can not create one (same) college
+    const isCollegeExist = await College.findOne({ collegeName: collegeName });
+
+    if (isCollegeExist) {
+      return res.status(400).json({
+        message: "College is already exist",
+      });
+    }
+
     const college = await College.create({
       collegeName,
       address,
@@ -23,3 +42,6 @@ export const createCollge = async (req, res, next) => {
     });
   }
 };
+
+
+//  product controller , cloudnary setup

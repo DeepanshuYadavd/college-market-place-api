@@ -8,7 +8,6 @@ export const protect = async (req, res, next) => {
         message: "Unauthorized",
       });
     }
-
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(401).json({
