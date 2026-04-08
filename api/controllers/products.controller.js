@@ -1,7 +1,8 @@
-import { Product } from "../model/Product.js";
+import { Product } from "../model/product.schema.js";
 
 export const createProduct = async (req, res, next) => {
   try {
+    console.log(req.user);
     console.log(req.body);
     console.log(req.file);
   } catch (err) {

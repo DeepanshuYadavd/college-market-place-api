@@ -56,7 +56,11 @@ export const signin = async (req, res, next) => {
       });
     }
 
-    const token = await genToken(user._id, user.role);
+    const token = await genToken(
+      user._id,
+      user.role,
+      user.college ? user.college : null,
+    );
 
     if (!token) {
       return res.status(400).json({

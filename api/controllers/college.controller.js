@@ -1,4 +1,4 @@
-import { College } from "../model/collegeSchema.js";
+import { College } from "../model/college.schema.js";
 
 export const createCollge = async (req, res, next) => {
   try {
