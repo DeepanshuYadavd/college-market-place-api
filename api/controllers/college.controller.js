@@ -8,7 +8,6 @@ export const createCollge = async (req, res, next) => {
         message: "All fields are required",
       });
     }
-
     // case : 1 only one admin create one college
     const isAdminExist = await College.findOne({ admin: req.user.id });
 
