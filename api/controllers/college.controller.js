@@ -1,5 +1,6 @@
 import { College } from "../model/college.schema.js";
 
+//  create college
 export const createCollge = async (req, res, next) => {
   try {
     const { collegeName, address } = req.body;
@@ -42,5 +43,22 @@ export const createCollge = async (req, res, next) => {
   }
 };
 
+//  get colleges:
+export const getallColleges = async (req, res, next) => {
+  try {
+    const colleges = await College.find({});
 
-//  product controller , cloudnary setup
+    if (!colleges || colleges.length === 0) {
+      return res.status(400).json({
+        message: "No college found",
+      });
+    }
+    return res.status(200).json({
+      data: colleges,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};

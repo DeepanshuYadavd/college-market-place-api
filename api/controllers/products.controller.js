@@ -9,7 +9,6 @@ export const createProduct = async (req, res, next) => {
         message: "All fields are required",
       });
     }
-
     const user = req.user;
     if (!user) {
       return res.status(401).json({
