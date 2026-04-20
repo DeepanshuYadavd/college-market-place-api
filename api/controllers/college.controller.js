@@ -20,7 +20,7 @@ export const createCollge = async (req, res, next) => {
     const isCollegeExist = await College.findOne({ collegeName: collegeName });
     if (isCollegeExist) {
       return res.status(400).json({
-        message: "College is already exist",
+        message: "College is already exist with this name",
       });
     }
     const college = await College.create({

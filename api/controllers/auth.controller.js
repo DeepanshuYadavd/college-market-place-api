@@ -56,6 +56,14 @@ export const signin = async (req, res, next) => {
       });
     }
 
+    //  check isverified
+    if (user.isVerified === false) {
+      return res.status(400).json({
+        message: "You can sign in once the admin has verified you.",
+      });
+    }
+
+
     const token = await genToken(
       user._id,
       user.role,
@@ -92,6 +100,15 @@ export const signin = async (req, res, next) => {
   }
 };
 
+
+
+// pending:
+
+//  update user isVerified true by admin:
+
+
+
+
 export const getUser = async (req, res) => {
   try {
     const user = await Auth.findById(req.user.id).select("-password");
@@ -104,6 +121,9 @@ export const getUser = async (req, res) => {
   }
 };
 
+
+
+
 export const signout = async (req, res) => {
   try {
     res.clearCookie("token").status(200).json({
@@ -115,3 +135,7 @@ export const signout = async (req, res) => {
     });
   }
 };
+
+//  get user of particular college for admin:
+
+//  delete user by admin:
