@@ -1,5 +1,6 @@
 import { Auth } from "../model/auth.schema.js";
 import { genToken } from "../../utils/genToken.js";
+import { College } from "../model/college.schema.js";
 export const signup = async (req, res, next) => {
   try {
     const { userName, email, password, college, isVerified, role } = req.body;
@@ -63,7 +64,6 @@ export const signin = async (req, res, next) => {
       });
     }
 
-
     const token = await genToken(
       user._id,
       user.role,
@@ -100,14 +100,30 @@ export const signin = async (req, res, next) => {
   }
 };
 
-
-
-// pending:
+//  get all user for admin:
+export const getAllusers = async (req, res, next) => {
+  try {
+    const college = await College.findOne({ admin: req.user.id });
+    const users = await Auth.find({
+      role: "user",
+      college: college._id,
+    }).select("-password");
+    if (!users && users.length === 0) {
+      return res.status(400).json({
+        message: "No Users Found",
+      });
+    }
+    return res.status(200).json({
+      data: users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 
 //  update user isVerified true by admin:
-
-
-
 
 export const getUser = async (req, res) => {
   try {
@@ -120,9 +136,6 @@ export const getUser = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
-
-
-
 
 export const signout = async (req, res) => {
   try {
