@@ -4,6 +4,7 @@ import {
   signup,
   getUser,
   signout,
+  isVerifiedUser,
 } from "../controllers/auth.controller.js";
 import { isAdmin, protect } from "../middlewares/auth.middleware.js";
 import express from "express";
@@ -17,5 +18,6 @@ router.post("/signout", signout);
 
 //  admin:
 router.get("/admin/get-users", protect, isAdmin, getAllusers);
+router.post("/admin/verify-user/:id", protect, isAdmin, isVerifiedUser);
 
 export default router;

@@ -124,6 +124,24 @@ export const getAllusers = async (req, res, next) => {
 };
 
 //  update user isVerified true by admin:
+export const isVerifiedUser = async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const updated_user = await Auth.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isVerified: true } },
+      { new: true },
+    );
+    return res.json({
+      message: "User verified successfully",
+      data: updated_user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 
 export const getUser = async (req, res) => {
   try {
